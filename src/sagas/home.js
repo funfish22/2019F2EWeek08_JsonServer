@@ -18,7 +18,6 @@ function* getList(payload) {
 function* getFolder(payload) {
     try{
         const result = yield call(api.getFolder);
-        console.log(result.data)
         yield put(action.getFolderSuccess({
             folders: result.data
         }))
@@ -34,7 +33,7 @@ function* watchGetListRequest() {
 
 function* createFolder(action, payload) {
     try {
-        yield call(api.createFolder, {name: action.payload.name, star: true});
+        yield call(api.createFolder, {name: action.payload.name});
         yield call(getFolder)
     }catch (e) {
         
