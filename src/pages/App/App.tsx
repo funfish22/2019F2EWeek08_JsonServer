@@ -3,7 +3,7 @@ import { HashRouter, BrowserRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import firebase from 'firebase';
 
-// import config from 'config/utils/configureFirebase'
+import 'config/utils/configureFirebase'
 
 import Navbar from 'resources/components/organisms/Navbar';
 import Footer from 'resources/components/organisms/Footer';
