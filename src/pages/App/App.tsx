@@ -13,14 +13,17 @@ import Router from './Router';
 interface Props { 
     advanced_close: Function,
     drag: Function,
-    drag_root: Function,
-    add_files: Function,
+    drag_root: Function
     getListRequest: Function,
+    createFilesRequest: Function,
     footerDrag: boolean,
     dragRoot: boolean
 }
 
 interface State { }
+
+interface typeInfo {[key: string]: any} 
+
 
 const folder = ""
 
@@ -93,15 +96,53 @@ class App extends React.Component<Props, State> {
     onDrop = (e:any) => {
         e.preventDefault();
 
-        const { drag, drag_root, add_files } = this.props
+        const { drag, drag_root, createFilesRequest, getListRequest } = this.props
         let files = e.dataTransfer.files;
-        console.log('Files dropped: ', files);
+
         drag_root(false)
         let task
         for(let i = 0; i < files.length; i++) {
+            let fileTypeMap: typeInfo = {
+                png: 'ic_image_24px.svg',
+                jpg: 'ic_image_24px.svg',
+                img: 'ic_image_24px.svg',
+                svg: 'ic_image_24px.svg',
+                ai: 'ic-ai.svg',
+                psd: 'ic-ps.svg',
+                xd: 'ic-xd.svg',
+                doc: 'ic-word.svg',
+                docx: 'ic-word.svg',
+                xls: 'ic-excel.svg',
+                xlsx: 'ic-excel.svg',
+                csv: 'ic-excel.svg',
+                ppt: 'ic-ppt.svg',
+                pptx: 'ic-ppt.svg',
+                pdf: 'ic-pdf.svg',
+                mp3: 'ic-media.svg',
+                mp4: 'ic-media.svg'
+            }
+
             const path = folder + files[i].name;
+            
+            let fileType = '';
+            let fileSize = '';
+            let time = `${files[i].lastModifiedDate.getYear() + 1900}/${files[i].lastModifiedDate.getMonth() + 1}/${files[i].lastModifiedDate.getDate()}`
+            let ext = (/[.]/.exec(path)) ? /[^.]+$/.exec(path) : undefined;
+            if(ext === null || ext === undefined) return
+
+            fileType = fileTypeMap[ext[0]] ? fileTypeMap[ext[0]] : 'ic-unkown.svg';
+
             const storageReference = firebase.storage().ref(path);
             task = storageReference.put(files[i]);
+
+            if(files[i].size < 1024) {
+                fileSize = Math.ceil(files[i].size / 1024) + ' kb'
+            } else if (files[i].size >= 1024 || files[i].size < 1024000 ){
+                fileSize = Math.ceil(files[i].size / 1024000) + ' mb'
+            } else {
+                fileSize = Math.ceil(files[i].size / 1024000000) + ' gb'
+            }
+            createFilesRequest(path, fileSize, time, fileType)
         }
 
         if(task === undefined) return;
@@ -116,8 +157,8 @@ class App extends React.Component<Props, State> {
                 drag(false);
             },
             function complete() {
-                add_files(files)
                 drag(false);
+                getListRequest();
             }
         );
         

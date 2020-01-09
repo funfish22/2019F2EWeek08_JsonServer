@@ -44,9 +44,23 @@ function* watchCreateFolderRequest() {
     yield takeLatest(action.Types.CREATE_FOLDER_REQUEST, createFolder)
 }
 
+function* createFiles(action, payload) {
+    try {
+        yield call(api.createFiles, {name: action.payload.name, size: action.payload.size, time: action.payload.time, fileType: action.payload.fileType});
+        yield call(getFolder)
+    }catch (e) {
+        
+    }
+}
+
+function* watchCreateFilesRequest() {
+    yield takeLatest(action.Types.CREATE_FILES_REQUEST, createFiles)
+}
+
 const usersSagas = [
     fork(watchGetListRequest),
-    fork(watchCreateFolderRequest)
+    fork(watchCreateFolderRequest),
+    fork(watchCreateFilesRequest)
 ];
 
 export default usersSagas;

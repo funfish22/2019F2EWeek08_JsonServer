@@ -27,9 +27,6 @@ const mapDispatchToProps = (dispatch: any) => {
         advanced_open: (advanced: Boolean) => {
             dispatch(advanced_open(advanced))
         },
-        add_folder: (name: string) => {
-            dispatch(add_folder(name))
-        },
         remove_folder: () => {
             dispatch(remove_folder())
         },

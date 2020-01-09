@@ -3,10 +3,8 @@ export const Types = {
     ADVANCED_CLOSE: 'toolBar/advanced_close',
 
     TARGET_FOLDER: 'toolbar/target_folder',
-    ADD_FOLDER: 'toolBar/add_folder',
     REMOVE_FOLDER: 'toolBar/remove_folder',
 
-    ADD_FILES: 'toolbar/add_files',
     SORT_FILES: 'toolbar/sort_files',
 
     ADD_STAR: 'toolbar/add_star',
@@ -19,7 +17,8 @@ export const Types = {
 
     GET_FOLDER_SUCCESS: 'folder/get_folder_success',
 
-    CREATE_FOLDER_REQUEST: 'folder/create_folder_request'
+    CREATE_FOLDER_REQUEST: 'folder/create_folder_request',
+    CREATE_FILES_REQUEST: 'list/create_files_request'
 }
 
 export const advanced_open = (advanced) => {
@@ -75,13 +74,6 @@ export const drag_root = (dragSwitch) => {
     }
 }
 
-export const add_files = (object) => {
-    return {
-        type: Types.ADD_FILES,
-        object
-    }
-}
-
 export const sort_files = number => {
     return {
         type: Types.SORT_FILES,
@@ -112,4 +104,16 @@ export const createFolderRequest = (name) => ({
     payload: {
         name
     }
-})
+});
+
+export const createFilesRequest = ({name, size, time, fileType}) => {
+    return{
+        type: Types.CREATE_FILES_REQUEST,
+        payload: {
+            name,
+            size,
+            time,
+            fileType
+        }
+    }
+}
