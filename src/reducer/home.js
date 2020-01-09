@@ -45,14 +45,6 @@ const ReducerRoot = (state = initState, action) => {
                 targetFolder: action.id
             });
 
-        case Types.ADD_FOLDER :
-            const id = new Date().getTime()
-
-            return {
-                ...state,
-                folderArray: [...state.folderArray, { id, name: action.name, star: false }]
-            };
-
         case Types.REMOVE_FOLDER :
             const newFilterArray = state.folderArray.filter((row) => {
                 return row.id !== state.targetFolder
@@ -100,67 +92,6 @@ const ReducerRoot = (state = initState, action) => {
                 ...state,
                 dragRoot: action.dragSwitch
             }
-
-        case Types.ADD_FILES:
-            let newFiles = [];
-            let fileLocal = state.fileLocal;
-
-            if(state.fileLocal === '') {
-                fileLocal = 'my drive'
-            }
-
-            action.object.forEach((row) => {
-                const fileTypeMap = {
-                    png: 'ic_image_24px.svg',
-                    img: 'ic_image_24px.svg',
-                    svg: 'ic_image_24px.svg',
-                    ai: 'ic-ai.svg',
-                    psd: 'ic-ps.svg',
-                    xd: 'ic-xd.svg',
-                    doc: 'ic-word.svg',
-                    docx: 'ic-word.svg',
-                    xls: 'ic-excel.svg',
-                    xlsx: 'ic-excel.svg',
-                    csv: 'ic-excel.svg',
-                    ppt: 'ic-ppt.svg',
-                    pptx: 'ic-ppt.svg',
-                    pdf: 'ic-pdf.svg',
-                    mp3: 'ic-media.svg',
-                    mp4: 'ic-media.svg'
-                }
-
-                let ext = (/[.]/.exec(row.name)) ? /[^.]+$/.exec(row.name)[0] : undefined;
-                let fileType = '';
-                let fileSize = '';
-
-                fileType = fileTypeMap[ext] ? fileTypeMap[ext] : 'ic-unkown.svg';
-
-                if(row.size < 1024) {
-                    fileSize = Math.ceil(row.size / 1024) + ' kb'
-                } else if (row.size >= 1024 || row.size < 102400 ){
-                    fileSize = Math.ceil(row.size / 102400) + ' mb'
-                } else {
-                    fileSize = Math.ceil(row.size / 102400000) + ' gb'
-                }
-                    
-                newFiles.push(
-                    {
-                        id: row.lastModified + new Date().getTime(),
-                        icon: `assets/img/${fileType}`,
-                        name: row.name,
-                        local: fileLocal,
-                        time: `${row.lastModifiedDate.getYear() + 1900}/${row.lastModifiedDate.getMonth() + 1}/${row.lastModifiedDate.getDate()}`,
-                        size: fileSize
-                    }
-                )
-            })
-
-            const concatFiles = state.list.concat(newFiles)
-
-            return {
-                ...state,
-                list: concatFiles
-            };
 
         case Types.SORT_FILES:
             if(action.number === 0) {

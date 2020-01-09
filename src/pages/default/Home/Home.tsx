@@ -13,8 +13,7 @@ interface Props {
     targetFolder: number,
     sortArray: number,
     over: boolean
-    advanced_open: Function,
-    add_folder: Function,
+    advanced_open: Function
     target_folder: Function,
     remove_folder: Function,
     add_star: Function,

@@ -14,3 +14,13 @@ export const createFolder = ({name}) => {
         star: false
     })
 };
+
+export const createFiles = ({name, local, time, size, fileType}) => {
+    return axios.post('/list', {
+        name,
+        local: 'my drive',
+        time,
+        size,
+        icon: `assets/img/${fileType}`
+    })
+};
