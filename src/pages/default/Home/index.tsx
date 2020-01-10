@@ -1,7 +1,7 @@
 import Home from './Home';
 import { connect } from 'react-redux'
 
-import {advanced_open, add_folder, remove_folder, target_folder, add_star, sort_files, createFolderRequest} from 'action/index'
+import {advanced_open, target_folder, add_star, sort_files, createFolderRequest, removeFolderRequest} from 'action/index'
 
 const mapStateToProps = (state: 
     { 
@@ -27,9 +27,6 @@ const mapDispatchToProps = (dispatch: any) => {
         advanced_open: (advanced: Boolean) => {
             dispatch(advanced_open(advanced))
         },
-        remove_folder: () => {
-            dispatch(remove_folder())
-        },
         target_folder: (id: number) => {
             dispatch(target_folder(id))
         },
@@ -41,6 +38,9 @@ const mapDispatchToProps = (dispatch: any) => {
         },
         createFolderRequest: (name: string) => {
             dispatch(createFolderRequest(name))
+        },
+        removeFolderRequest: (id: number) => {
+            dispatch(removeFolderRequest(id))
         }
     }
 }

@@ -1,5 +1,5 @@
 import {takeEvery, takeLatest, take, call, fork, put} from 'redux-saga/effects';
-import * as action from 'action';
+import * as actions from 'action';
 
 import * as api from '../api/homes';
 
@@ -7,7 +7,7 @@ import * as api from '../api/homes';
 function* getList(payload) {
     try{
         const result = yield call(api.getList);
-        yield put(action.getListSuccess({
+        yield put(actions.getListSuccess({
             items: result.data
         }))
     }catch (e) {
@@ -18,7 +18,7 @@ function* getList(payload) {
 function* getFolder(payload) {
     try{
         const result = yield call(api.getFolder);
-        yield put(action.getFolderSuccess({
+        yield put(actions.getFolderSuccess({
             folders: result.data
         }))
     }catch (e) {
@@ -27,8 +27,8 @@ function* getFolder(payload) {
 }
 
 function* watchGetListRequest() {
-    yield takeEvery(action.Types.GET_LIST_REQUEST, getList)
-    yield takeEvery(action.Types.GET_LIST_REQUEST, getFolder)
+    yield takeEvery(actions.Types.GET_LIST_REQUEST, getList)
+    yield takeEvery(actions.Types.GET_LIST_REQUEST, getFolder)
 }
 
 function* createFolder(action, payload) {
@@ -41,7 +41,7 @@ function* createFolder(action, payload) {
 }
 
 function* watchCreateFolderRequest() {
-    yield takeLatest(action.Types.CREATE_FOLDER_REQUEST, createFolder)
+    yield takeLatest(actions.Types.CREATE_FOLDER_REQUEST, createFolder)
 }
 
 function* createFiles(action, payload) {
@@ -54,13 +54,34 @@ function* createFiles(action, payload) {
 }
 
 function* watchCreateFilesRequest() {
-    yield takeLatest(action.Types.CREATE_FILES_REQUEST, createFiles)
+    yield takeLatest(actions.Types.CREATE_FILES_REQUEST, createFiles)
+}
+
+function* removeFolder({id}) {
+    try {
+        yield call(api.removeFolder, id);
+        yield getFolder();
+    }catch (e) {
+        // yield put(actions.usersError({
+        //     error: '刪除失敗'
+        // }))
+    }
+}
+
+function* watchRemoveFolderRequest() {
+    while (true) {
+        const action = yield take(actions.Types.REMOVE_FOLDER_REQUEST);
+        yield call(removeFolder, {
+            id: action.payload.id
+        })
+    }
 }
 
 const usersSagas = [
     fork(watchGetListRequest),
     fork(watchCreateFolderRequest),
-    fork(watchCreateFilesRequest)
+    fork(watchCreateFilesRequest),
+    fork(watchRemoveFolderRequest)
 ];
 
 export default usersSagas;

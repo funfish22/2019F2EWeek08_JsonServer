@@ -24,3 +24,7 @@ export const createFiles = ({name, local, time, size, fileType}) => {
         icon: `assets/img/${fileType}`
     })
 };
+
+export const removeFolder = id => {
+    return axios.delete(`/folderArray/${id}`)
+}

@@ -12,10 +12,10 @@ interface Props {
     Advanced: boolean,
     targetFolder: number,
     sortArray: number,
-    over: boolean
-    advanced_open: Function
+    over: boolean,
+    advanced_open: Function,
     target_folder: Function,
-    remove_folder: Function,
+    removeFolderRequest: Function,
     add_star: Function,
     sort_files: Function,
     createFolderRequest: Function
@@ -54,10 +54,10 @@ class Home extends React.PureComponent<Props, State> {
     }
 
     render() {
-        const { list, Advanced, targetFolder, folderArray, remove_folder, sortArray, over } = this.props
+        const { list, Advanced, targetFolder, folderArray, sortArray, over, removeFolderRequest } = this.props
         return(
             <>
-                <ToolBar Advanced={Advanced} onStar={this.handleAddStar} onOk={this.handleAddFolder} onRemove={remove_folder}/>
+                <ToolBar Advanced={Advanced} onStar={this.handleAddStar} onOk={this.handleAddFolder} onRemove={() => removeFolderRequest(targetFolder)}/>
                 { 
                     over ? 
                     <>
