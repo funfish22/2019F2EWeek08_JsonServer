@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {withRouter, RouteComponentProps} from "react-router-dom";
+
 import FileFolder from 'resources/components/atoms/FileFolder';
 
 // const array = [
@@ -51,7 +53,7 @@ interface Props {
 
 interface State {}
 
-class FolderBlock extends React.Component<Props, State> {
+class FolderBlock extends React.Component<Props & RouteComponentProps, State> {
     // static defaultProps = {
     //     source: array
     // }
@@ -62,6 +64,12 @@ class FolderBlock extends React.Component<Props, State> {
         onClick(e, id)
     }
 
+    handleEnderFolder = (name: any) => {
+        const {history} = this.props;
+
+        history.push(`/Folder/${name}`)
+    }
+
     render() {
         const { className, source, active } = this.props;
         return(
@@ -70,7 +78,7 @@ class FolderBlock extends React.Component<Props, State> {
                     { 
                         source && source.map((row) => {
                             return (
-                                <FileFolder active={active === row.id} star={row.star} key={row.id} onClick={(e:any) => this.handleChecked(e, row.id)}>{row.name}</FileFolder>
+                                <FileFolder active={active === row.id} star={row.star} key={row.id} onClick={(e:any) => this.handleChecked(e, row.id)} onRouter={() => this.handleEnderFolder(row.name)}>{row.name}</FileFolder>
                             )
                         }) 
                     }
@@ -83,7 +91,7 @@ class FolderBlock extends React.Component<Props, State> {
     }
 }
 
-export default FolderBlock;
+export default withRouter(FolderBlock);
 
 const FolderBlockRoot = styled.div`
     max-width: 1110px;

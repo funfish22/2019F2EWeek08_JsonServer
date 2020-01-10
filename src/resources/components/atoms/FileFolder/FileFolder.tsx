@@ -1,11 +1,14 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 
+import {withRouter, RouteComponentProps} from "react-router-dom";
+
 interface Props {
     children: string,
     onClick: Function,
     star: boolean,
-    active: boolean
+    active: boolean,
+    onRouter: any
 }
 
 interface State {}
@@ -14,7 +17,7 @@ interface MyStyle {
     active: boolean;
 }
 
-class FileFolder extends React.Component<Props, State> {
+class FileFolder extends React.Component<Props & RouteComponentProps, State> {
 
     handleAddStar = (e: any) => {
         const {onClick} = this.props;
@@ -28,9 +31,9 @@ class FileFolder extends React.Component<Props, State> {
     }
 
     render() {
-        const {children, active, star} = this.props;
+        const {children, active, star, onRouter} = this.props;
         return(
-            <FileFolderRoot onClick={this.handleAddStar} active={active}>
+            <FileFolderRoot onClick={this.handleAddStar} active={active} onDoubleClick={onRouter}>
                 {
                     !star ? <Icon style={active ? {color: '#2A8CFD'} : {color: '#000'}} className="icon-folder-24px"></Icon> : <Icon className="icon-folder_special-24px"></Icon>
                 }
@@ -41,7 +44,7 @@ class FileFolder extends React.Component<Props, State> {
     }
 }
 
-export default FileFolder;
+export default withRouter(FileFolder);
 
 
 const FileFolderName = styled.span`
