@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import 'config/utils/configureFirebase';
+import firebase from 'firebase';
+
 interface Props {
     className?: string,
     source?: Array<{
@@ -22,6 +25,34 @@ class List extends React.Component<Props, State> {
         changeSwitch: true
     }
 
+    handleDownload = (name: any) => {
+        const fileRef = firebase.storage().ref(name)
+        
+         // .ref 指向已存在 storage 中的檔案位置後 可以透過 getDownloadURL 取得連結
+        fileRef.getDownloadURL().then(function(url) {
+            fetch(url)
+            .then(res => res.blob())
+            .then(blob => {
+                let aLink = document.createElement("a");
+            
+                // 用 createObjectURL 將 blob 創建一個我們本地端瀏覽器中的 URL 對象
+                let url = window.URL.createObjectURL(blob);
+                aLink.href = url;
+                aLink.download = name;
+
+                // Firefox 需要將 JS 建立出的 element appendChild 到 DOM 上才可以 work
+                aLink.style.display = "none";
+                document.body.appendChild(aLink);
+
+                aLink.click();
+
+                // 刪除多餘的 DOM 與 釋放記憶體
+                document.body.removeChild(aLink);
+                window.URL.revokeObjectURL(url);
+            });
+        });
+    }
+
     render() {
         const { className, source, sortArray, onClick } = this.props;
         return(
@@ -39,7 +70,7 @@ class List extends React.Component<Props, State> {
                 </ListHead>
                 <ListBody>
                     { source && source.map((row) => (
-                        <ListLi key={row.id}>
+                        <ListLi key={row.id} onDoubleClick={() => this.handleDownload(row.name)}>
                             <ListIcon>
                                 <img src={row.icon} alt="" />
                             </ListIcon>
