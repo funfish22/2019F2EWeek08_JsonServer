@@ -45,17 +45,6 @@ const ReducerRoot = (state = initState, action) => {
                 targetFolder: action.id
             });
 
-        case Types.REMOVE_FOLDER :
-            const newFilterArray = state.folderArray.filter((row) => {
-                return row.id !== state.targetFolder
-            })
-
-            return {
-                ...state,
-                folderArray: newFilterArray,
-                targetFolder: ''
-            }
-
         case Types.ADD_STAR :
             const targetStar = state.folderArray.find((row) => {
                 return row.id === action.id

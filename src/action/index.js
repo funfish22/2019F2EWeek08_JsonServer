@@ -3,7 +3,6 @@ export const Types = {
     ADVANCED_CLOSE: 'toolBar/advanced_close',
 
     TARGET_FOLDER: 'toolbar/target_folder',
-    REMOVE_FOLDER: 'toolBar/remove_folder',
 
     SORT_FILES: 'toolbar/sort_files',
 
@@ -18,7 +17,9 @@ export const Types = {
     GET_FOLDER_SUCCESS: 'folder/get_folder_success',
 
     CREATE_FOLDER_REQUEST: 'folder/create_folder_request',
-    CREATE_FILES_REQUEST: 'list/create_files_request'
+    CREATE_FILES_REQUEST: 'list/create_files_request',
+
+    REMOVE_FOLDER_REQUEST: 'folder/remove_folder_request'
 }
 
 export const advanced_open = (advanced) => {
@@ -46,12 +47,6 @@ export const add_folder = (name) => {
     return{
         type: Types.ADD_FOLDER,
         name
-    }
-}
-
-export const remove_folder = () => {
-    return{
-        type: Types.REMOVE_FOLDER
     }
 }
 
@@ -105,6 +100,15 @@ export const createFolderRequest = (name) => ({
         name
     }
 });
+
+export const removeFolderRequest = id => {
+    return{
+        type: Types.REMOVE_FOLDER_REQUEST,
+        payload: {
+            id
+        }
+    }
+}
 
 export const createFilesRequest = ({name, size, time, fileType}) => {
     return{
