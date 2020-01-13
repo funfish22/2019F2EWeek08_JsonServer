@@ -7,18 +7,22 @@ const mapStateToProps = (state:
     { 
         filterList: any;
         folderArray: any;
+        filterFolder: any;
         Advanced: boolean;
         targetFolder: number;
         sortArray: number;
-        over: boolean
+        over: boolean;
+        searchStar: boolean;
     }) => {
     return{
         filterList: state.filterList,
         folderArray: state.folderArray,
+        filterFolder: state.filterFolder,
         Advanced: state.Advanced,
         targetFolder: state.targetFolder,
         sortArray: state.sortArray,
-        over: state.over
+        over: state.over,
+        searchStar: state.searchStar
     }
 }
 

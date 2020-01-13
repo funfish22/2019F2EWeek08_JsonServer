@@ -4,11 +4,13 @@ import styled from 'styled-components';
 const array = [
     {
         id: 0,
-        title: 'starred'
+        title: 'starred',
+        onStar: true
     },
     {
         id: 1,
-        title: 'trash'
+        title: 'trash',
+        onStar: false
     }
 ]
 
@@ -16,8 +18,10 @@ interface Props {
     className?: string,
     source?: Array<{
         id: number,
-        title: string
-    }>
+        title: string,
+        onStar: boolean
+    }>,
+    onStar: any
 }
 
 interface State {}
@@ -27,13 +31,15 @@ class Breadcrumb extends React.Component<Props, State> {
         source: array
     }
     render() {
-        const {className, source} = this.props;
+        const {className, source, onStar} = this.props;
         return(
             <Ul className={className}>
                 {
-                    source && source.map((row) => (
-                        <Li key={row.id}>{row.title}</Li>
-                    ))
+                    source && source.map((row) => {
+                        return(
+                            row.onStar ? <Li key={row.id} onClick={onStar}>{row.title}</Li> : <Li key={row.id}>{row.title}</Li>
+                        )
+                    })
                 }
             </Ul>
         )
@@ -50,6 +56,7 @@ const Li = styled.li`
     text-transform: uppercase;
     margin-right: 32px;
     display: inline-block;
+    cursor: pointer;
 
     &:last-of-type {
         margin-right: 0;

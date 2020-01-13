@@ -3,6 +3,7 @@ export const Types = {
     ADVANCED_CLOSE: 'toolBar/advanced_close',
 
     TARGET_FOLDER: 'toolbar/target_folder',
+    FILTER_FOLDER: 'toolbar/filter_folder',
 
     SORT_FILES: 'toolbar/sort_files',
     SEARCH_FILES: 'toolbar/search_files',
@@ -55,6 +56,13 @@ export const add_star = (id) => ({
     type: Types.ADD_STAR,
     id
 })
+
+export const filter_Folder = (_switch) => {
+    return{
+        type: Types.FILTER_FOLDER,
+        _switch
+    }
+}
 
 export const drag = (dragSwitch) => {
     return{

@@ -8,28 +8,31 @@ import SearchBar from 'resources/components/atoms/SearchBar';
 const source = [
     {
         id: 0,
-        title: 'starred'
+        title: 'starred',
+        onStar: true
     },
     {
         id: 1,
-        title: 'trash'
+        title: 'trash',
+        onStar: false
     }
 ]
 
 interface Props {
-    onSearch: Function
+    onSearch: Function,
+    onStar: any
 }
 
 interface State {}
 
 class Navbar extends React.Component<Props, State> {
     render() {
-        const { onSearch } = this.props
+        const { onSearch, onStar } = this.props
         return(
             <Header>
                 <Container>
                     <Logo />
-                    <Bread source={source}/>
+                    <Bread source={source} onStar={onStar}/>
                     <Search onSearch={onSearch}/>
                 </Container>
                 
