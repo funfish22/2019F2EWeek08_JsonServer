@@ -16,6 +16,7 @@ interface Props {
     drag_root: Function
     getListRequest: Function,
     createFilesRequest: Function,
+    search_files: Function,
     footerDrag: boolean,
     dragRoot: boolean
 }
@@ -165,11 +166,16 @@ class App extends React.Component<Props, State> {
         return false;
     }
 
+    handleSearch = (text: any) => {
+        const { search_files } = this.props
+        search_files(text)
+    }
+
     render() {
         const { footerDrag, dragRoot} = this.props
         return (
             <HashRouter>
-                <Navbar/>
+                <Navbar onSearch={this.handleSearch}/>
                 <Router/>
                 <Footer footerDrag={footerDrag} dragRoot={dragRoot}>storage</Footer>
             </HashRouter>

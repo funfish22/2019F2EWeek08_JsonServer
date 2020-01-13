@@ -1,7 +1,7 @@
 import App from './App';
 import { connect } from 'react-redux'
 
-import { advanced_close, drag, drag_root, getListRequest, createFilesRequest } from 'action/index'
+import { advanced_close, drag, drag_root, getListRequest, createFilesRequest, search_files } from 'action/index'
 
 const mapStateToProps = (state: 
     { 
@@ -32,6 +32,9 @@ const mapDispatchToProps = (dispatch: any) => {
         },
         createFilesRequest: (name: any, size: any, time: any, fileType: any) => {
             dispatch(createFilesRequest({name, size, time, fileType}))
+        },
+        search_files: (text: any) => {
+            dispatch(search_files(text))
         }
     }
 }

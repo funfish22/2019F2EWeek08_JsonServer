@@ -5,6 +5,7 @@ export const Types = {
     TARGET_FOLDER: 'toolbar/target_folder',
 
     SORT_FILES: 'toolbar/sort_files',
+    SEARCH_FILES: 'toolbar/search_files',
 
     ADD_STAR: 'toolbar/add_star',
 
@@ -73,6 +74,13 @@ export const sort_files = number => {
     return {
         type: Types.SORT_FILES,
         number
+    }
+}
+
+export const search_files = text => {
+    return {
+        type: Types.SEARCH_FILES,
+        text
     }
 }
 

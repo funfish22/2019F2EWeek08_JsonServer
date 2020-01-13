@@ -5,7 +5,7 @@ import {advanced_open, target_folder, add_star, sort_files, createFolderRequest,
 
 const mapStateToProps = (state: 
     { 
-        list: any;
+        filterList: any;
         folderArray: any;
         Advanced: boolean;
         targetFolder: number;
@@ -13,7 +13,7 @@ const mapStateToProps = (state:
         over: boolean
     }) => {
     return{
-        list: state.list,
+        filterList: state.filterList,
         folderArray: state.folderArray,
         Advanced: state.Advanced,
         targetFolder: state.targetFolder,

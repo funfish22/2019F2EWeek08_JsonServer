@@ -16,19 +16,21 @@ const source = [
     }
 ]
 
-interface Props {}
+interface Props {
+    onSearch: Function
+}
 
 interface State {}
 
 class Navbar extends React.Component<Props, State> {
     render() {
-        
+        const { onSearch } = this.props
         return(
             <Header>
                 <Container>
                     <Logo />
                     <Bread source={source}/>
-                    <Search/>
+                    <Search onSearch={onSearch}/>
                 </Container>
                 
             </Header>

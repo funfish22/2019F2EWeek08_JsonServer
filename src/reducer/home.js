@@ -11,7 +11,9 @@ const initState = {
     sortArray: 0,
     fileLocal: "",
     over: false,
-    folderArray: []
+    folderArray: [],
+    list: [],
+    filterList: []
 }
 
 
@@ -21,14 +23,15 @@ const ReducerRoot = (state = initState, action) => {
             return {
                 ...state,
                 list: action.payload.items,
+                filterList: action.payload.items,
                 over: true
             }
-            case Types.GET_FOLDER_SUCCESS :
-                return {
-                    ...state,
-                    folderArray: action.payload.folders,
-                    over: true
-                }
+        case Types.GET_FOLDER_SUCCESS :
+            return {
+                ...state,
+                folderArray: action.payload.folders,
+                over: true
+            }
         case Types.ADVANCED_OPEN :
             return Object.assign({}, state, {
                 Advanced: true
@@ -82,23 +85,33 @@ const ReducerRoot = (state = initState, action) => {
                 dragRoot: action.dragSwitch
             }
 
+        case Types.SEARCH_FILES:
+            let filter = state.list.filter(o => {
+                const matchArray = o.name.match(action.text);
+                return !!matchArray
+            });
+            return {
+                ...state,
+                filterList: filter
+            }
+
         case Types.SORT_FILES:
             if(action.number === 0) {
                 return {
                     ...state,
-                    list: state.list.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1),
+                    filterList: state.filterList.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1),
                     sortArray: 1
                 }
             } else if (action.number === 2) {
                 return {
                     ...state,
-                    list: state.list.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1),
+                    filterList: state.filterList.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1),
                     sortArray: 1
                 }
             } else if (action.number === 1) {
                 return{
                     ...state,
-                    list: state.list.sort((a, b) => b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1),
+                    filterList: state.filterList.sort((a, b) => b.name.toLowerCase() > a.name.toLowerCase() ? 1 : -1),
                     sortArray: 2
                 }
             } else {
