@@ -7,7 +7,7 @@ import FolderBlock from 'resources/components/molecules/FolderBlock'
 import List from 'resources/components/organisms/List';
 
 interface Props {
-    list: any,
+    filterList: any,
     folderArray: any,
     Advanced: boolean,
     targetFolder: number,
@@ -54,7 +54,7 @@ class Home extends React.PureComponent<Props, State> {
     }
 
     render() {
-        const { list, Advanced, targetFolder, folderArray, sortArray, over, removeFolderRequest } = this.props
+        const { filterList, Advanced, targetFolder, folderArray, sortArray, over, removeFolderRequest } = this.props
         return(
             <>
                 <ToolBar Advanced={Advanced} onStar={this.handleAddStar} onOk={this.handleAddFolder} onRemove={() => removeFolderRequest(targetFolder)}/>
@@ -64,7 +64,7 @@ class Home extends React.PureComponent<Props, State> {
                         <ListBar>folders</ListBar>
                         <FolderBlock source={folderArray} onClick={this.handleOpenAdvanced} active={targetFolder}/>
                         <ListBar>files</ListBar>
-                        <List source={list} onClick={this.handleSort} sortArray={sortArray}/>
+                        <List source={filterList} onClick={this.handleSort} sortArray={sortArray}/>
                     </> :
                     <div style={{textAlign: "center"}}>讀取中</div>
                 }

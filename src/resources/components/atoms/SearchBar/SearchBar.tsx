@@ -3,17 +3,36 @@ import styled from 'styled-components';
 
 interface Props {
     className?: string,
+    onSearch: any
 }
 
-interface State {}
+interface State {
+    text: any
+}
 
 class SearchBar extends React.Component<Props, State> {
+    state = {
+        text: ''
+    }
+
+    handleSearch = (e: any) => {
+        e.preventDefault();
+
+        const {onSearch} = this.props;
+
+        this.setState({
+            text: e.target.value
+        })
+
+        onSearch(e.target.value)
+    }
     render() {
         const { className } = this.props;
+        const {text} = this.state
         return(
             <SearchBarRoot className={className}>
                 <Label>
-                    <Input type="text" />
+                    <Input type="text" value={text} onChange={this.handleSearch}/>
                 </Label>
                 <Button type="button">
                     <Icon className="icon-search-24px"></Icon>
