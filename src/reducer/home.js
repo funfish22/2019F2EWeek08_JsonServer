@@ -13,7 +13,9 @@ const initState = {
     over: false,
     folderArray: [],
     list: [],
-    filterList: []
+    filterList: [],
+    filterFolder: [],
+    searchStar: false
 }
 
 
@@ -30,6 +32,7 @@ const ReducerRoot = (state = initState, action) => {
             return {
                 ...state,
                 folderArray: action.payload.folders,
+                filterFolder: action.payload.folders,
                 over: true
             }
         case Types.ADVANCED_OPEN :
@@ -83,6 +86,16 @@ const ReducerRoot = (state = initState, action) => {
             return {
                 ...state,
                 dragRoot: action.dragSwitch
+            }
+
+        case Types.FILTER_FOLDER:
+            let filterFolder = state.folderArray.filter(o => {
+                return o.star === true
+            })
+            return {
+                ...state,
+                filterFolder: filterFolder,
+                searchStar: !action._switch
             }
 
         case Types.SEARCH_FILES:

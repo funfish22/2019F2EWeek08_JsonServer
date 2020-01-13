@@ -1,18 +1,20 @@
 import App from './App';
 import { connect } from 'react-redux'
 
-import { advanced_close, drag, drag_root, getListRequest, createFilesRequest, search_files } from 'action/index'
+import { advanced_close, drag, drag_root, getListRequest, createFilesRequest, search_files, filter_Folder } from 'action/index'
 
 const mapStateToProps = (state: 
     { 
         Advanced: boolean;
         footerDrag: boolean;
         dragRoot: boolean;
+        searchStar: boolean;
     }) => {
     return{
         Advanced: state.Advanced,
         footerDrag: state.footerDrag,
-        dragRoot: state.dragRoot
+        dragRoot: state.dragRoot,
+        searchStar: state.searchStar
     }
 }
 
@@ -35,6 +37,9 @@ const mapDispatchToProps = (dispatch: any) => {
         },
         search_files: (text: any) => {
             dispatch(search_files(text))
+        },
+        filter_Folder: (searchStar: any) => {
+            dispatch(filter_Folder(searchStar))
         }
     }
 }

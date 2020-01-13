@@ -9,10 +9,12 @@ import List from 'resources/components/organisms/List';
 interface Props {
     filterList: any,
     folderArray: any,
+    filterFolder: any,
     Advanced: boolean,
     targetFolder: number,
     sortArray: number,
     over: boolean,
+    searchStar: boolean,
     advanced_open: Function,
     target_folder: Function,
     removeFolderRequest: Function,
@@ -54,7 +56,7 @@ class Home extends React.PureComponent<Props, State> {
     }
 
     render() {
-        const { filterList, Advanced, targetFolder, folderArray, sortArray, over, removeFolderRequest } = this.props
+        const { filterList, Advanced, targetFolder, folderArray, sortArray, over, removeFolderRequest, searchStar, filterFolder } = this.props
         return(
             <>
                 <ToolBar Advanced={Advanced} onStar={this.handleAddStar} onOk={this.handleAddFolder} onRemove={() => removeFolderRequest(targetFolder)}/>
@@ -62,7 +64,11 @@ class Home extends React.PureComponent<Props, State> {
                     over ? 
                     <>
                         <ListBar>folders</ListBar>
-                        <FolderBlock source={folderArray} onClick={this.handleOpenAdvanced} active={targetFolder}/>
+                        {
+                            !searchStar ? 
+                            <FolderBlock source={folderArray} onClick={this.handleOpenAdvanced} active={targetFolder}/> :
+                            <FolderBlock source={filterFolder} onClick={this.handleOpenAdvanced} active={targetFolder}/>
+                        }
                         <ListBar>files</ListBar>
                         <List source={filterList} onClick={this.handleSort} sortArray={sortArray}/>
                     </> :
